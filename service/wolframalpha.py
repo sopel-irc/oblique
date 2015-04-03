@@ -15,8 +15,7 @@ class Main(base.RequestHandler):
 
     def get(self, *args):
         
-        query = urllib.unquote(args[1])
-        query = urllib.unquote_plus(query)
+        query = urllib.unquote_plus(args[1])
         query = urllib.urlencode({"i": query})
         
         if not query:
