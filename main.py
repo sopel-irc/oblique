@@ -1,6 +1,10 @@
+import webapp2
+
 import wsgiref.handlers
 
 from google.appengine.ext import webapp
+
+import django
 
 from service import base
 from service import mirror
@@ -29,6 +33,7 @@ from service import wow
 from service import map
 from service import general
 from service import twit
+#from service import twitter
 from service import jargon
 
 uris = [
@@ -59,6 +64,7 @@ uris = [
   ("^/map(/(.*?))?/?", map.Main),
   ("^/general(/(.*?))?/?", general.Main),
   ("^/twit(/(.*?))?/?", twit.Main),
+  #("^/twitter(/(.*?))?/?", twitter.Main),
   ("^/jargon(/(.*?))?/?", jargon.Main),
   ("^/.*$", base.NotFound),
 ]
@@ -66,5 +72,13 @@ uris = [
 def main():
   wsgiref.handlers.CGIHandler().run(webapp.WSGIApplication(uris, debug=True))
 
+'''class MainPage(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write('Hello, WebApp World!')
+'''
+
+#app = webapp2.WSGIApplication([('/', MainPage)])
+
 if __name__ == "__main__":
-  main()
+    main()
