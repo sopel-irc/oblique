@@ -63,6 +63,11 @@ def load(uri):
     exec get(uri) in load.module.__dict__
     return load.module
 
+
+SAFER_BUILTINS = dict(__builtins__)
+del SAFER_BUILTINS['globals']
+
+
 class Main(base.RequestHandler):
 
     def get(self, *args):
@@ -73,9 +78,9 @@ class Main(base.RequestHandler):
         sys.stderr = output
         try:
             try:
-                output.write(str(eval(command)))
+                output.write(str(eval(command, {'__builtins__': SAFER_BUILTINS})))
             except SyntaxError:
-                exec(command)
+                exec(command, {'__builtins__': SAFER_BUILTINS})
             output.seek(0)
             self.ok(output.readline())
         except Exception, error:
